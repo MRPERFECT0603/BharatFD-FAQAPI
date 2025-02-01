@@ -5,7 +5,7 @@ const faqsSchema = new mongoose.Schema(
     {
         faqID: { type: String, default: () => randomUUID(), unique: true },
         question: { type: String },
-        answer: { type: Number },
+        answer: { type: String },
         lang: { type: String },
     },
     {
@@ -13,4 +13,4 @@ const faqsSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("Faqs", faqsSchema);
+export default  mongoose.model("Faqs", faqsSchema);
