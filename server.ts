@@ -1,8 +1,7 @@
-
 import express, { Express} from "express";
 import { connectDB } from "./Config/dbConfig";
 import dotenv from "dotenv";
-
+import faqRouter from "./Routes/faqRoutes";
 
 const PORT = process.env.PORT || 8000;
 dotenv.config();
@@ -12,9 +11,9 @@ connectDB();
 
 //middleware
 app.use(express.json());
-
+app.use("/api" , faqRouter);
 
 
 app.listen(PORT , ()=>{
-                    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
