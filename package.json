@@ -1,0 +1,42 @@
+{
+  "name": "bharatfd",
+  "version": "1.0.0",
+  "description": "-> DEV BRANCH",
+  "main": "server.js",
+  "scripts": {
+    "build": "rm -rf dist && npx tsc",
+    "prestart": "npm run build",
+    "start": "node dist/server.js",
+    "dev": "npx tsc -w & nodemon dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MRPERFECT0603/BharatFD-FAQAPI.git"
+  },
+  "author": "Vivek Shaurya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MRPERFECT0603/BharatFD-FAQAPI/issues"
+  },
+  "homepage": "https://github.com/MRPERFECT0603/BharatFD-FAQAPI#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "globals": "^15.14.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.22.0"
+  },
+  "dependencies": {
+    "@google-cloud/translate": "^8.5.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.12.0",
+    "@types/validator": "^13.12.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "env": "^0.0.2",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.6",
+    "validator": "^13.12.0"
+  }
+}
