@@ -30,13 +30,17 @@
   "dependencies": {
     "@google-cloud/translate": "^8.5.0",
     "@types/express": "^5.0.0",
+    "@types/ioredis": "^4.28.10",
     "@types/node": "^22.12.0",
+    "@types/redis": "^4.0.10",
     "@types/validator": "^13.12.2",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "env": "^0.0.2",
     "express": "^4.21.2",
+    "ioredis": "^5.4.2",
     "mongoose": "^8.9.6",
+    "redis": "^4.7.0",
     "validator": "^13.12.0"
   }
 }
