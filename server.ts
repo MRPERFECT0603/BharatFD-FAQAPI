@@ -1,5 +1,6 @@
 import express, { Express} from "express";
 import { connectDB } from "./Config/dbConfig";
+import { connectRedis } from "./Config/redisConfig";
 import dotenv from "dotenv";
 import faqRouter from "./Routes/faqRoutes";
 
@@ -8,7 +9,7 @@ dotenv.config();
 
 const app:Express = express();
 connectDB();
-
+connectRedis();
 //middleware
 app.use(express.json());
 app.use("/api" , faqRouter);

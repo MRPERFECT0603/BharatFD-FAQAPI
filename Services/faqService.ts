@@ -1,5 +1,6 @@
 import { Translate } from '@google-cloud/translate/build/src/v2';  
 import { getFaqsByLanguageFromRepo } from "../Repository/faqsRepo";  
+import { saveFaqs } from "../Repository/faqsRepo";
 
 const translate = new Translate();
 
@@ -13,7 +14,7 @@ const languages = ['hi', 'bn', 'ur'];
  */
 const translateText = async (text: string, targetLang: string) => {
   try {
-    const [translation] = await translate.translate(text, targetLang);  // Perform translation
+    const [translation] = await translate.translate(text, targetLang);
     return translation; 
   } catch (error) {
     console.error(`Translation failed for ${targetLang}:`, error);
@@ -30,7 +31,7 @@ const translateText = async (text: string, targetLang: string) => {
  * @param {string} answer - The original answer text
  * @returns {Array} - Array of translation objects for each language
  */
-export const translateData = async (question: string, answer: string) => {
+export const createFaq = async (question: string, answer: string) => {
   console.log("Original Question:", question);
   console.log("Original Answer:", answer);
 
@@ -49,7 +50,9 @@ export const translateData = async (question: string, answer: string) => {
     translations.push(translationObject);
   }
 
-  return translations; 
+  await saveFaqs(translations);
+  
+  return {question , answer};
 };
 
 

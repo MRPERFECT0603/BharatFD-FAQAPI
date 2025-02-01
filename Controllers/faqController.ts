@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import validator from 'validator';
-import { translateData ,getFaqsByLanguage } from "../Services/faqService";
-import { saveFaqs } from "../Repository/faqsRepo";
+import { createFaq ,getFaqsByLanguage } from "../Services/faqService";
 
 const addFaqs = async (req: Request, res: Response) => {
   const { question, answer } = req.body;
@@ -17,12 +16,9 @@ const addFaqs = async (req: Request, res: Response) => {
 
   try {
 
-    const createdFaqs = await translateData(question, answer); 
+    const createdFaqs = await createFaq(question, answer); 
 
-    await saveFaqs(createdFaqs);
-
-
-    return res.status(201).json({ message: "FAQs created and saved successfully!" });
+    return res.status(201).json({ message: "FAQs created and saved successfully!" + createdFaqs });
   }  catch (error) {
     const err = error as Error; 
     console.error("Error in creating FAQS:", {
@@ -37,7 +33,7 @@ const addFaqs = async (req: Request, res: Response) => {
 const getFaqs = async (req: Request, res: Response) => {
 
     const lang = (req.query.lang as string) || "en"; 
-  
+   // redis check 
     try {
 
       const faqs = await getFaqsByLanguage(lang);
