@@ -1,4 +1,5 @@
 import { Translate } from '@google-cloud/translate/build/src/v2';  
+import { getFaqsByLanguageFromRepo } from "../Repository/faqsRepo";  
 
 const translate = new Translate();
 
@@ -49,4 +50,19 @@ export const translateData = async (question: string, answer: string) => {
   }
 
   return translations; 
+};
+
+
+/**
+ * Fetches FAQs by the specified language.
+ * @param {string} lang - The language code (e.g., 'en', 'hi', 'bn').
+ */
+export const getFaqsByLanguage = async (lang: string) => {
+  try {
+    const faqs = await getFaqsByLanguageFromRepo(lang);
+    return faqs;
+  } catch (error) {
+    console.error("Error in service:", error);
+    throw new Error("Failed to fetch FAQs from the repository");
+  }
 };

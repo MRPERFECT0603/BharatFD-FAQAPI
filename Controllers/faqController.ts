@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import validator from 'validator';
-import { translateData } from "../Services/faqService";
+import { translateData ,getFaqsByLanguage } from "../Services/faqService";
 import { saveFaqs } from "../Repository/faqsRepo";
 
 const addFaqs = async (req: Request, res: Response) => {
@@ -35,8 +35,28 @@ const addFaqs = async (req: Request, res: Response) => {
 };
 
 const getFaqs = async (req: Request, res: Response) => {
-  // Implement your getFaqs logic here
-};
+
+    const lang = (req.query.lang as string) || "en"; 
+  
+    try {
+
+      const faqs = await getFaqsByLanguage(lang);
+  
+      if (faqs.length === 0) {
+        return res.status(404).json({ message: "No FAQs found for the specified language" });
+      }
+  
+      return res.status(200).json({ faqs });
+    }catch (error) {
+        const err = error as Error; 
+        console.error("Error in Getting FAQS:", {
+            error: err.message || err,
+            requestBody : req.query,
+        });
+    
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
 module.exports = {
   addFaqs,
