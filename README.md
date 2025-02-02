@@ -222,7 +222,7 @@ git push origin feature/your-feature-name
 You can reach out to Vivek Shaurya through the following channels:
 
 ### 📧 **Email**:
-- [vivek@example.com](mailto:vivekshaurya62@example.com)
+- [vivekshaurya@gmail.com](mailto:vivekshaurya62@gmail.com)
 
 ### 💻 **GitHub**:
 - [Vivek's GitHub Profile](https://github.com/MRPERFECT0603)
