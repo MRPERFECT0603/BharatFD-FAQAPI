@@ -8,11 +8,16 @@ const PORT = process.env.PORT || 8000;
 dotenv.config();
 
 const app: Express = express();
+
+//Database and Cache Conenction 
 connectDB();
 connectRedis();
 
 //middleware
 app.use(express.json());
+
+
+//Routes
 app.use("/api", faqRouter);
 
 
