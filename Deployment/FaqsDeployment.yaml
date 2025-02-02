@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faqservice-deployment
+  namespace: BharatFD
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mylabel: faqservice
+  template:
+    metadata:
+      labels:
+        mylabel: faqservice
+    spec:
+      containers:
+        - name: faqservice-container
+          image: vivekshaurya/smartinbox-faqservice  # Replace with your actual image name
+          env:
+            - name: MONGODB_URI
+              value: //YOUR_MONGO_URI # Replace with actual MONGO URI
+            - name: REDIS_HOST
+              value: //YOUR_REDIS_API # Replace with actual Redis host
+            - name: REDIS_PORT
+              value: '10568'  # Replace with your Redis port
+            - name: REDIS_USERNAME
+              value: default  # Replace with your Redis username
+            - name: REDIS_PASSWORD
+              value: //REDIS_PASSWORD  # Replace with your Redis password
+            - name: PORT
+              value: '8000'
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "256Mi"
+              cpu: "1000m"
