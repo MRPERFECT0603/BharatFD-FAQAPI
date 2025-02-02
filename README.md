@@ -5,10 +5,48 @@ This project provides an **API** for managing Frequently Asked Questions (FAQs) 
 
 ## Table of Contents
 
+- [Assumptions](#assumptions)
 - [Installation Steps](#installation-steps)
 - [API Usage Examples](#api-usage-examples)
 - [Contribution Guidelines](#contribution-guidelines)
 - [Testing](#testing)
+
+
+---
+
+## Assumptions
+
+The following assumptions have been made while creating this project:
+
+1. **Modeling the Data**:
+   - We are considering two ways to model the data for storing FAQs in different languages:
+     - **First Approach** (to be used in case of many languages): 
+       - Multiple documents, one for each language (e.g., English, Hindi, Urdu, Bengali). 
+       - Each document contains a `FAQ ID`, `question`, and `answer`. The `FAQ ID` is referenced across all documents, ensuring that the same FAQ is shared across different language documents.
+       - This approach is suited for a larger number of languages, as having all the languages in one document can be inefficient when the number of languages grows significantly.
+     - **Second Approach** (Used in this Project): 
+       - A single document contains all languages for each FAQ. Each FAQ has a `question`, `answer`, and a `language` field to specify which language it belongs to.
+       - This approach is used for a smaller number of languages (e.g., 4-5 languages). However, if the number of languages increases, **we plan to switch to the first approach** for better scalability.
+
+   For the current project, **the second approach** is used since there are only 4-5 languages. If the number of languages increases in the future, we will switch to the first approach.
+
+2. **API Development**:
+   - Two main APIs are implemented:
+     - **GET API**: To retrieve all FAQs based on the specified language.
+     - **POST API**: To add new FAQs to the database.
+   - **Multi-language Support**: Multi-language support is provided using the **Google Translate API** to translate FAQ content.
+   - **Redis Caching**: The project utilizes **Redis** for caching frequently requested FAQ data to enhance performance and reduce database load.
+
+3. **Admin Panel**:
+   - Since the project is developed using **TypeScript** and **Node.js**, **there is no built-in admin panel** within the project.
+   - Instead, a separate **React.js-based admin panel** is provided, allowing for easier management of FAQs via a UI.
+
+4. **Docker & Kubernetes Setup**:
+   - A **Dockerfile** is provided to containerize the project and ensure consistency across different environments.
+   - The project also includes **Kubernetes deployment** and **service files** to facilitate the deployment of the entire application (including the Node.js app and Redis) on a Kubernetes cluster.
+
+These assumptions were taken into account while developing this project to ensure scalability, performance, and maintainability, and are relevant for the current scope of the project.
+
 
 ---
 
@@ -179,7 +217,6 @@ git push origin feature/your-feature-name
 
 ---
 
----
 ## Contact Developer: Vivek Shaurya
 
 You can reach out to Vivek Shaurya through the following channels:
