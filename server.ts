@@ -8,14 +8,22 @@ const PORT = process.env.PORT || 8000;
 dotenv.config();
 
 const app: Express = express();
+
+//Database and Cache Conenction 
 connectDB();
 connectRedis();
 
 //middleware
 app.use(express.json());
+
+
+//Routes
 app.use("/api", faqRouter);
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+export default app; 
