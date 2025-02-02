@@ -10,6 +10,7 @@ dotenv.config();
 const app: Express = express();
 connectDB();
 connectRedis();
+
 //middleware
 app.use(express.json());
 app.use("/api", faqRouter);

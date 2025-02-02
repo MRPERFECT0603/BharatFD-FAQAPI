@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import validator from 'validator';
 import { createFaq ,getFaqsByLanguage } from "../Services/faqService";
+import { client } from "../Config/redisConfig";
+
+
 
 const addFaqs = async (req: Request, res: Response) => {
   const { question, answer } = req.body;
@@ -30,29 +33,29 @@ const addFaqs = async (req: Request, res: Response) => {
 }
 };
 
+
 const getFaqs = async (req: Request, res: Response) => {
+  const lang = (req.query.lang as string) || "en";
+  const cacheKey = `faqs:${lang}`;
 
-    const lang = (req.query.lang as string) || "en"; 
-   // redis check 
-    try {
+  try {
+    // Fetch from MongoDB
+    const faqs = await getFaqsByLanguage(lang);
 
-      const faqs = await getFaqsByLanguage(lang);
-  
-      if (faqs.length === 0) {
-        return res.status(404).json({ message: "No FAQs found for the specified language" });
-      }
-  
-      return res.status(200).json({ faqs });
-    }catch (error) {
-        const err = error as Error; 
-        console.error("Error in Getting FAQS:", {
-            error: err.message || err,
-            requestBody : req.query,
-        });
-    
-        return res.status(500).json({ error: 'Internal Server Error' });
+    if (faqs.length === 0) {
+      return res.status(404).json({ message: "No FAQs found for the specified language" });
     }
-  };
+
+    // Save to Redis for future use
+    await client.set(cacheKey, JSON.stringify(faqs), { EX: 3600 });
+    console.log(`✅ Data cached in Redis for key: ${cacheKey}`);
+
+    return res.status(200).json({ faqs });
+  } catch (error) {
+    console.error("❌ Error in Getting FAQS:", { error });
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 module.exports = {
   addFaqs,
